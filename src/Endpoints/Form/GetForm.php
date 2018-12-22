@@ -8,23 +8,16 @@ use calderawp\caldera\Forms\FormsCollection;
 use calderawp\interop\Contracts\Rest\RestRequestContract as Request;
 use calderawp\interop\Contracts\Rest\RestResponseContract as Response;
 
-class GetForms extends FormEndpoint
+class GetForm extends FormEndpoint
 {
-	use RespondsForForms;
+
+	use RespondsForForm;
+
 	/** @inheritdoc */
-	public function getArgs(): array
-	{
-		return [
-
-		];
-	}
-
 	public function hookSpecifier(): string
 	{
-		return 'getForms';
+		return 'getForm';
 	}
-
-
 
 
 	/** @inheritdoc */
