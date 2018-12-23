@@ -3,7 +3,6 @@
 
 namespace calderawp\caldera\restApi\Endpoints\Form;
 
-
 use calderawp\caldera\Forms\FormModel;
 use calderawp\interop\Contracts\Rest\RestRequestContract as Request;
 use calderawp\interop\Contracts\Rest\RestResponseContract as Response;
@@ -49,5 +48,4 @@ trait RespondsForForm
 	{
 		return "restApi/forms/{$this->hookSpecifier()}/form";
 	}
-
 }

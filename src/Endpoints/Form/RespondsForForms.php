@@ -2,6 +2,7 @@
 
 
 namespace calderawp\caldera\restApi\Endpoints\Form;
+
 use calderawp\caldera\Forms\FormModel;
 use calderawp\caldera\Forms\FormsCollection;
 use calderawp\interop\Contracts\Rest\RestRequestContract as Request;
@@ -38,5 +39,4 @@ trait RespondsForForms
 			->applyFilters($this->getResponseHookName(), $forms->toResponse(), $forms, $request);
 		return $response;
 	}
-
 }

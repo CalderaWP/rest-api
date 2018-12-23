@@ -9,9 +9,4 @@ use calderawp\interop\Traits\Rest\ProvidesRestEndpoint;
 abstract class Endpoint implements EndpointContract
 {
 	use ProvidesRestEndpoint;
-
-
-	public function __construct()
-	{
-	}
 }

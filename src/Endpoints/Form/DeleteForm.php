@@ -3,21 +3,19 @@
 
 namespace calderawp\caldera\restApi\Endpoints\Form;
 
-class PostForm extends FormEndpoint
+class DeleteForm extends FormEndpoint
 {
 
 	use RespondsForForm, HasFullFormArgs;
 
 	public function hookSpecifier(): string
 	{
-		return 'postForm';
+		return 'deleteForm';
 	}
 
 	/** @inheritdoc */
 	public function getHttpMethod(): string
 	{
-		return 'POST';
+		return 'DELETE';
 	}
-
-
 }
