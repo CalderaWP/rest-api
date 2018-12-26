@@ -25,4 +25,5 @@ class Form extends Route
 		$this->addEndpoint(new PostForm($module));
 		$this->addEndpoint(new DeleteForm($module));
 	}
+
 }
