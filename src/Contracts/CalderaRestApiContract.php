@@ -9,6 +9,8 @@ use calderawp\interop\Contracts\CalderaModule;
 interface CalderaRestApiContract extends CalderaModule
 {
 
-	public function setCalderaEvents(CalderaEvents $events);
+	/**
+	 * @return CalderaEvents
+	 */
 	public function getCalderaEvents(): CalderaEvents;
 }

@@ -2,6 +2,7 @@
 
 namespace calderawp\caldera\restApi\Tests;
 
+use calderawp\caldera\core\CalderaCore;
 use calderawp\caldera\Events\CalderaEvents;
 use calderawp\caldera\restApi\CalderaRestApi;
 use calderawp\CalderaContainers\Service\Container;
@@ -9,17 +10,18 @@ use calderawp\CalderaContainers\Service\Container;
 class CalderaRestApiTest extends TestCase
 {
 
+
+
 	/**
-	 * @covers \calderawp\caldera\restApi\CalderaRestApi::setCalderaEvents()
+	 * @covers \calderawp\caldera\restApi\CalderaRestApi::getCore()
 	 * @covers \calderawp\caldera\restApi\CalderaRestApi::getCalderaEvents()
 	 */
-	public function testSetCalderaEvents()
+	public function testGetCalderaEvents()
 	{
 
-		$events = new CalderaEvents(new Container());
-		$restApi = new CalderaRestApi(new Container());
-		$restApi->setCalderaEvents($events);
-		$this->assertSame($events, $restApi->getCalderaEvents());
+		$core = $this->core();
+		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
+		$this->assertEquals($core->getEvents(), $restApi->getCalderaEvents());
 	}
 
 	/**
@@ -28,7 +30,7 @@ class CalderaRestApiTest extends TestCase
 	public function testRegisterServices()
 	{
 
-		$restApi = new CalderaRestApi(new Container());
+		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
 		$this->assertEquals(1, 1);
 	}
 
@@ -37,7 +39,16 @@ class CalderaRestApiTest extends TestCase
 	 */
 	public function testGetIdentifier()
 	{
-		$restApi = new CalderaRestApi(new Container());
+		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
 		$this->assertEquals('rest-api', $restApi->getIdentifier());
+	}
+
+	/**
+	 * @covers \calderawp\caldera\restApi\CalderaRestApi::getCore()
+	 */
+	public function testGetCore()
+	{
+		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
+		$this->assertInstanceOf(CalderaCore::class, $restApi->getCore());
 	}
 }
