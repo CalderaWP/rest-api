@@ -20,6 +20,7 @@ trait RespondsForForm
 		];
 	}
 
+
 	/** @inheritdoc */
 	public function handleRequest(Request $request) : Response
 	{

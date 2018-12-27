@@ -5,6 +5,7 @@ namespace calderawp\caldera\restApi\Routes;
 
 use calderawp\caldera\Forms\FormModel;
 use calderawp\caldera\restApi\CalderaRestApi;
+use calderawp\caldera\restApi\Endpoint;
 use calderawp\caldera\restApi\Endpoints\Form\DeleteForm;
 use calderawp\caldera\restApi\Endpoints\Form\GetForms;
 use calderawp\caldera\restApi\Endpoints\Form\GetForm;
@@ -25,5 +26,4 @@ class Form extends Route
 		$this->addEndpoint(new PostForm($module));
 		$this->addEndpoint(new DeleteForm($module));
 	}
-
 }
