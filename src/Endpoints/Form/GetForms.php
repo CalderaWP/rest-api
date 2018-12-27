@@ -25,6 +25,10 @@ class GetForms extends FormEndpoint
 	}
 
 
+	public function getUri(): string
+	{
+		return parent::getUri() . '/<formId>';
+	}
 
 
 	/** @inheritdoc */

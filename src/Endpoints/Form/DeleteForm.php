@@ -18,4 +18,10 @@ class DeleteForm extends FormEndpoint
 	{
 		return 'DELETE';
 	}
+
+	/** @inheritdoc */
+	public function getUri(): string
+	{
+		return parent::getUri() . '/<formId>';
+	}
 }

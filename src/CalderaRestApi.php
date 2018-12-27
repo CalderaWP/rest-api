@@ -3,17 +3,19 @@
 
 namespace calderawp\caldera\restApi;
 
+use calderawp\caldera\restApi\Contracts\CalderaRestApiContract;
 use calderawp\caldera\Events\CalderaEvents;
 use calderawp\interop\Contracts\CalderaModule;
 use calderawp\interop\Module;
 use calderawp\CalderaContainers\Service\Container as ServiceContainer;
 
-class CalderaRestApi extends Module
+class CalderaRestApi extends Module implements CalderaRestApiContract
 {
 
+	const IDENTIFIER = 'rest-api';
 	public function getIdentifier(): string
 	{
-		return 'rest-api';
+		return self::IDENTIFIER;
 	}
 
 	public function registerServices(ServiceContainer$container): CalderaModule
