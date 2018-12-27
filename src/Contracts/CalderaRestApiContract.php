@@ -13,4 +13,8 @@ interface CalderaRestApiContract extends CalderaModule
 	 * @return CalderaEvents
 	 */
 	public function getCalderaEvents(): CalderaEvents;
+
+	public function addRoute(RouteContract $route): CalderaRestApiContract;
+
+	public function getRoute(string $className) : RouteContract;
 }

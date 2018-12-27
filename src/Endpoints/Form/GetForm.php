@@ -11,14 +11,22 @@ use calderawp\interop\Contracts\Rest\RestResponseContract as Response;
 class GetForm extends FormEndpoint
 {
 
-	use RespondsForForm;
 
 	/** @inheritdoc */
-	public function hookSpecifier(): string
+	public function getArgs(): array
 	{
-		return 'getForm';
+		return [
+			'formId' => [
+				'type' => 'string'
+			]
+		];
 	}
 
+
+	public function handleRequest(Request $request): Response
+	{
+		return $this->getRoute()->getForm($request);
+	}
 
 	/** @inheritdoc */
 	public function getHttpMethod(): string

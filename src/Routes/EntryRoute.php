@@ -18,10 +18,6 @@ class EntryRoute extends Route
 	 * @var EntryController
 	 */
 	protected $controller;
-	public function __construct(CalderaRestApi $module)
-	{
-		parent::__construct($module);
-	}
 
 	/**
 	 * Set controller
