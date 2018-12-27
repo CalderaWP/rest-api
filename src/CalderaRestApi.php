@@ -6,6 +6,7 @@ namespace calderawp\caldera\restApi;
 use calderawp\caldera\Events\CalderaEvents;
 use calderawp\interop\Contracts\CalderaModule;
 use calderawp\interop\Module;
+use calderawp\CalderaContainers\Service\Container as ServiceContainer;
 
 class CalderaRestApi extends Module
 {
@@ -15,7 +16,7 @@ class CalderaRestApi extends Module
 		return 'rest-api';
 	}
 
-	public function registerServices(): CalderaModule
+	public function registerServices(ServiceContainer$container): CalderaModule
 	{
 		return $this;
 	}
