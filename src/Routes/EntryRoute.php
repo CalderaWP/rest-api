@@ -32,7 +32,13 @@ class EntryRoute extends Route
 		return $this;
 	}
 
-
+	/**
+	 * Route request for an entry
+	 *
+	 * @param Request $request
+	 *
+	 * @return RestResponseContract
+	 */
 	public function getEntry(Request $request) : RestResponseContract
 	{
 
@@ -44,12 +50,35 @@ class EntryRoute extends Route
 		}
 	}
 
-
+	/**
+	 * Route request for entries
+	 *
+	 * @param Request $request
+	 *
+	 * @return RestResponseContract
+	 */
 	public function getEntries(Request$request) : RestResponseContract
 	{
 		try {
 			$entries = $this->controller->getEntries(null, $request);
 			return $this->controller->entriesToResponse($entries);
+		} catch (Exception $e) {
+			return $this->exceptionToResponse($e);
+		}
+	}
+
+	/**
+	 * Route request to create entry
+	 *
+	 * @param Request $request
+	 *
+	 * @return RestResponseContract
+	 */
+	public function createEntry(Request $request): RestResponseContract
+	{
+		try {
+			$entry = $this->controller->createEntry(null, $request);
+			return $this->controller->entryToResponse($entry);
 		} catch (Exception $e) {
 			return $this->exceptionToResponse($e);
 		}

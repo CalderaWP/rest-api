@@ -17,10 +17,10 @@ class GetEntryTest extends TestCase
 		$this->assertEquals('/entries/<entryId>', $endpoint->getUri());
 	}
 
+	/** @covers \calderawp\caldera\restApi\Endpoints\Entry\GetEntry::handleRequest() */
 	public function testHandleRequest()
 	{
 		$restApi = $this->calderaRestApi();
-		//$restApi->registerServices($restApi->getServiceContainer());
 		$this->assertIsObject($restApi->getRoute(FormRoute::class));
 		$endpoint = new GetEntry($this->calderaRestApi());
 		$request = new Request();
