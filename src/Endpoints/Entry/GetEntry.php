@@ -29,7 +29,11 @@ class GetEntry extends EntryEndpoint
 	 */
 	public function handleRequest(Request $request): Response
 	{
-		// TODO: Implement handleRequest() method.
+
+		$core = $this->module->getCore();
+		$events = $core->getEvents();
+		$calderaForms = $core->getCalderaForms();
+		$entries = $calderaForms->getEntries();
 	}
 
 	/** @inheritdoc */

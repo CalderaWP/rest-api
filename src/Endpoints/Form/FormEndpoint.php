@@ -15,7 +15,11 @@ abstract class FormEndpoint extends Endpoint
 
 
 
-
+	/** @inheritdoc */
+	protected function hookPrefix(): string
+	{
+		return 'forms';
+	}
 
 	/** @inheritdoc */
 	public function getUri(): string
