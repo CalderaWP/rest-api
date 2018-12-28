@@ -8,6 +8,11 @@ use calderawp\caldera\Forms\Controllers\EntryController;
 use calderawp\caldera\Forms\Controllers\FormsController;
 use calderawp\caldera\restApi\Contracts\CalderaRestApiContract;
 use calderawp\caldera\Events\CalderaEvents;
+use calderawp\caldera\restApi\Endpoints\Entry\CreateEntry;
+use calderawp\caldera\restApi\Endpoints\Entry\GetEntries;
+use calderawp\caldera\restApi\Endpoints\Entry\GetEntry;
+use calderawp\caldera\restApi\Endpoints\Form\GetForm;
+use calderawp\caldera\restApi\Endpoints\Form\GetForms;
 use calderawp\caldera\restApi\Routes\EntryRoute;
 use calderawp\caldera\restApi\Routes\FormRoute;
 use calderawp\interop\Contracts\CalderaModule;
@@ -34,10 +39,19 @@ class CalderaRestApi extends Module implements CalderaRestApiContract
 		$this->addRoute(
 			(new EntryRoute($this))
 			->setController(new EntryController($this->core->getCalderaForms()))
+			->addEndpoints([
+				new CreateEntry($this),
+				new GetEntry($this),
+				new GetEntries($this),
+			])
 		);
 		$this->addRoute(
 			(new FormRoute($this))
 				->setController(new FormsController($this->core->getCalderaForms()))
+				->addEndpoints([
+					new GetForms($this),
+					new GetForm($this)
+				])
 		);
 		return $this;
 	}

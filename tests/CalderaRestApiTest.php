@@ -5,6 +5,7 @@ namespace calderawp\caldera\restApi\Tests;
 use calderawp\caldera\core\CalderaCore;
 use calderawp\caldera\Events\CalderaEvents;
 use calderawp\caldera\restApi\CalderaRestApi;
+use calderawp\caldera\restApi\Endpoints\Form\GetForms;
 use calderawp\caldera\restApi\Routes\EntryRoute;
 use calderawp\caldera\restApi\Routes\FormRoute;
 use calderawp\CalderaContainers\Service\Container;
@@ -32,6 +33,14 @@ class CalderaRestApiTest extends TestCase
 
 		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
 		$this->assertEquals(1, 1);
+
+		$route = $restApi->getRoute(FormRoute::class);
+		$this->assertArrayHasKey('calderawp\caldera\restApi\Endpoints\Form\GetForms', $route->getEndpoints());
+		$this->assertArrayHasKey('calderawp\caldera\restApi\Endpoints\Form\GetForm', $route->getEndpoints());
+
+
+		$route = $restApi->getRoute(EntryRoute::class);
+		$this->assertCount(3, $route->getEndpoints());
 	}
 
 	/**
