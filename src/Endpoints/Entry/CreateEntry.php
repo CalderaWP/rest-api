@@ -19,7 +19,7 @@ class CreateEntry extends EntryEndpoint
 				'type' => 'string'
 			],
 			'entryValues' => [
-				'type' => 'array'
+				'type' => 'object'
 			]
 		];
 	}

@@ -31,6 +31,6 @@ class GetEntry extends EntryEndpoint
 	/** @inheritdoc */
 	public function getUri(): string
 	{
-		return '/entries/<entryId>';
+		return '/entries/<(?P<entryId>\d+)>';
 	}
 }
