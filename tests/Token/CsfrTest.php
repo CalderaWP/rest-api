@@ -18,12 +18,25 @@ class CsfrTest extends TestCase
 	/**
 	 * @covers Csfr::validateToken()
 	 */
-	public function testValidateToken()
+	public function ___testValidateToken()
 	{
+		$this->assertFalse(true );
 		$manager = new CsrfTokenManager();
 		$action = 'form-submit';
 		$token = new Csfr($action,$manager);
 		$tokenString = $token->getToken();
 		$this->assertTrue($token->validateToken($tokenString));
+	}
+
+	/**
+	 * @covers Csfr::validateToken()
+	 */
+	public function testInvalidToken()
+	{
+		$manager = new CsrfTokenManager();
+		$action = 'form-submit';
+		$token = new Csfr($action,$manager);
+		$invalidToken = new Csfr('sddsf',$manager);
+		$this->assertFalse($token->validateToken($invalidToken->getToken()));
 	}
 }

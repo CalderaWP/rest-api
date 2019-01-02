@@ -26,4 +26,38 @@ abstract class Endpoint implements EndpointContract
 	{
 		return $this->module->getCalderaEvents()->getHooks();
 	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function authorizeRequest(Request $request) : bool
+	{
+
+		$tokenString = $this->getToken( $request );
+		if( ! $tokenString ){
+			return false;
+		}
+
+		return
+			$this->module
+				->getToken($tokenString )
+				->validateToken($tokenString);
+
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getToken( Request $request) : string
+	{
+		$headerName = 'X-CWP-TOKEN';
+		$paramName = 'cwpToken';
+		return $request
+			->getHeader($headerName)
+			? $request->getHeader($headerName)
+			: $request->getParam($paramName)
+				? $request->getParam($paramName)
+				: '';
+
+	}
 }

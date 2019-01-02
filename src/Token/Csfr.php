@@ -60,8 +60,14 @@ class Csfr implements TokenContract
 		$token = $this
 			->tokenManager
 			->getToken($tokenStringToValidate);
-		return $this
+
+		$tokenBeingValidated = $this
 			->tokenManager
-			->isTokenValid($token);
+			->getToken($token);
+
+		return   hash_equals(
+			$token->getId(),
+			$tokenStringToValidate
+	);
 	}
 }
