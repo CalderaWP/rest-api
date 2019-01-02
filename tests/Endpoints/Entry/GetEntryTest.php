@@ -14,7 +14,7 @@ class GetEntryTest extends TestCase
 	public function testGetUri()
 	{
 		$endpoint = new GetEntry($this->calderaRestApi());
-		$this->assertEquals('/entries/<entryId>', $endpoint->getUri());
+		$this->assertEquals('/entries/<(?P<entryId>\d+)>', $endpoint->getUri());
 	}
 
 	/** @covers \calderawp\caldera\restApi\Endpoints\Entry\GetEntry::handleRequest() */

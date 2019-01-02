@@ -9,6 +9,7 @@ use calderawp\caldera\restApi\Endpoints\Form\GetForms;
 use calderawp\caldera\restApi\Routes\EntryRoute;
 use calderawp\caldera\restApi\Routes\FormRoute;
 use calderawp\CalderaContainers\Service\Container;
+use \calderawp\interop\Contracts\TokenContract;
 
 class CalderaRestApiTest extends TestCase
 {
@@ -94,5 +95,29 @@ class CalderaRestApiTest extends TestCase
 		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
 		$route = new FormRoute($restApi);
 		$this->assertInstanceOf(FormRoute::class, $restApi->getRoute(FormRoute::class));
+	}
+
+	/**
+	 * @covers \calderawp\caldera\restApi\CalderaRestApi::getToken()
+	 */
+	public function testGetToken()
+	{
+		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
+		$this->assertInstanceOf( TokenContract::class, $restApi->getToken('ddd' ) );
+	}
+
+	/**
+	 * @covers \calderawp\caldera\restApi\CalderaRestApi::validateToken()
+	 */
+	public function testValidateToken()
+	{
+		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
+		$tokenString = $restApi
+			->getToken('tokenId' )
+			->getToken();
+		$this->assertTrue(
+			$restApi->getToken($tokenString )
+				->validateToken($tokenString)
+		);
 	}
 }
