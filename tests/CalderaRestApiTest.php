@@ -103,7 +103,7 @@ class CalderaRestApiTest extends TestCase
 	public function testGetToken()
 	{
 		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
-		$this->assertInstanceOf( TokenContract::class, $restApi->getToken('ddd' ) );
+		$this->assertInstanceOf(TokenContract::class, $restApi->getToken('ddd'));
 	}
 
 	/**
@@ -113,13 +113,11 @@ class CalderaRestApiTest extends TestCase
 	{
 		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
 		$tokenString = $restApi
-			->getToken('tokenId' )
+			->getToken('tokenId')
 			->getToken();
 		$this->assertTrue(
-			$restApi->getToken($tokenString )
+			$restApi->getToken($tokenString)
 				->validateToken($tokenString)
 		);
 	}
-
-
 }

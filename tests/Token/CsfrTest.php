@@ -12,7 +12,7 @@ class CsfrTest extends TestCase
 	 */
 	public function testGetToken()
 	{
-		$this->assertIsString((new Csfr('id',new CsrfTokenManager()))->getToken());
+		$this->assertIsString((new Csfr('id', new CsrfTokenManager()))->getToken());
 	}
 
 	/**
@@ -20,10 +20,10 @@ class CsfrTest extends TestCase
 	 */
 	public function ___testValidateToken()
 	{
-		$this->assertFalse(true );
+		$this->assertFalse(true);
 		$manager = new CsrfTokenManager();
 		$action = 'form-submit';
-		$token = new Csfr($action,$manager);
+		$token = new Csfr($action, $manager);
 		$tokenString = $token->getToken();
 		$this->assertTrue($token->validateToken($tokenString));
 	}
@@ -35,8 +35,8 @@ class CsfrTest extends TestCase
 	{
 		$manager = new CsrfTokenManager();
 		$action = 'form-submit';
-		$token = new Csfr($action,$manager);
-		$invalidToken = new Csfr('sddsf',$manager);
+		$token = new Csfr($action, $manager);
+		$invalidToken = new Csfr('sddsf', $manager);
 		$this->assertFalse($token->validateToken($invalidToken->getToken()));
 	}
 }

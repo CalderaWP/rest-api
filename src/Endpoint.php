@@ -33,22 +33,21 @@ abstract class Endpoint implements EndpointContract
 	public function authorizeRequest(Request $request) : bool
 	{
 
-		$tokenString = $this->getToken( $request );
-		if( ! $tokenString ){
+		$tokenString = $this->getToken($request);
+		if (! $tokenString) {
 			return false;
 		}
 
 		return
 			$this->module
-				->getToken($tokenString )
+				->getToken($tokenString)
 				->validateToken($tokenString);
-
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function getToken( Request $request) : string
+	public function getToken(Request $request) : string
 	{
 		$headerName = 'X-CWP-TOKEN';
 		$paramName = 'cwpToken';
@@ -58,6 +57,5 @@ abstract class Endpoint implements EndpointContract
 			: $request->getParam($paramName)
 				? $request->getParam($paramName)
 				: '';
-
 	}
 }

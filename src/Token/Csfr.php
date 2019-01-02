@@ -68,6 +68,6 @@ class Csfr implements TokenContract
 		return   hash_equals(
 			$token->getId(),
 			$tokenStringToValidate
-	);
+		);
 	}
 }
