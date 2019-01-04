@@ -33,7 +33,7 @@ class CsfrTest extends TestCase
 	 */
 	public function testInvalidToken()
 	{
-		$this->markTestSkipped('This implementation is wrong!' );
+		$this->markTestSkipped('This implementation is wrong!');
 
 		$manager = new CsrfTokenManager();
 		$action = 'form-submit';
