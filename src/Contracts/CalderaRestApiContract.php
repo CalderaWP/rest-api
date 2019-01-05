@@ -5,7 +5,6 @@ namespace calderawp\caldera\restApi\Contracts;
 
 use calderawp\caldera\Events\CalderaEvents;
 use calderawp\interop\Contracts\CalderaModule;
-use \calderawp\interop\Contracts\TokenContract;
 
 interface CalderaRestApiContract extends CalderaModule
 {
