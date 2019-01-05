@@ -3,7 +3,7 @@
 
 namespace calderawp\caldera\restApi;
 
-class Exception extends \calderawp\interop\Exception
+class Exception extends \calderawp\caldera\Http\Exception
 {
 
 }
