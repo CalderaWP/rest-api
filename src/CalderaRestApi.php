@@ -90,13 +90,4 @@ class CalderaRestApi extends Module implements CalderaRestApiContract
 		}
 		throw new Exception('Route not registered', 500);
 	}
-
-	/** @inheritdoc */
-	public function getToken(string $nonceAction): TokenContract
-	{
-		$manger = $this
-			->getServiceContainer()
-			->make(CsrfTokenManagerInterface::class);
-		return ( new Csfr($nonceAction, $manger));
-	}
 }
