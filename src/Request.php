@@ -3,4 +3,6 @@
 
 namespace calderawp\caldera\restApi;
 
-class Request extends \calderawp\caldera\Http\Request {};
+class Request extends \calderawp\caldera\Http\Request
+{
+};
