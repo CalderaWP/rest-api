@@ -104,3 +104,6 @@ Your route MUST send a
     - `composer test:unit`
 * Run acceptance tests
     - `composer test:acceptance`
+    
+## License, Copyright, etc.
+Copyright 2018+ CalderaWP LLC and licensed under the terms of the GNU GPL license. Please share with your neighbor.
