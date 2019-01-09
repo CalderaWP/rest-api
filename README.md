@@ -33,7 +33,10 @@ The Request and Response objects extend objects from the Http package. You shoul
 ## Usage
 
 ### Install
-`composer require @TODO`
+* Add to your package:
+    - `composer require calderawp/caldera-rest-api`
+* Install for development:
+    - `git clone git@github.com:CalderaWP/caldera-rest-api.git && composer install`
 
 ### Overview
 Main module class methods:
