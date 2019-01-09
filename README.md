@@ -1,6 +1,6 @@
 # Caldera REST API
 
-This is the forms package of the Caldera framework and provides REST API functionality to the framework.
+This is the forms package of the [Caldera Framework](https://github.com/CalderaWP/caldera) and provides REST API functionality to the framework.
  
 ## This Is Not Caldera Forms.
 * Documentation for the [Caldera Forms REST API](https://calderaforms.com/doc/caldera-forms-rest-api/) for Caldera Forms 1.x.
