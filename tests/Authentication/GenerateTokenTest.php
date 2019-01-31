@@ -30,6 +30,9 @@ class GenerateTokenTest extends \calderawp\caldera\restApi\Tests\TestCase
 			->andReturn($user);
 		$endpoint = new GenerateToken($wpJwt);
 		$request = Mockery::mock(\calderawp\caldera\restApi\Request::class );
+		$request
+			->shouldReceive('getParam' )
+			->andReturn( '12345' );
 		$this->assertIsObject($endpoint->handleRequest($request));
 	}
 

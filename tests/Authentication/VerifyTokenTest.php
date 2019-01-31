@@ -31,7 +31,7 @@ class VerifyTokenTest extends TestCase
 		$endpoint = new VerifyToken($wpJwt);
 		$request = Mockery::mock(\calderawp\caldera\restApi\Request::class );
 
-		$this->assertEquals($token, $endpoint->authorizeRequest($request));
+		$this->assertTrue( $endpoint->authorizeRequest($request));
 
 
 	}
@@ -49,7 +49,7 @@ class VerifyTokenTest extends TestCase
 		$request = Mockery::mock(\calderawp\caldera\restApi\Request::class );
 		$this->expectException(\Exception::class);
 
-		$this->assertEquals($token, $endpoint->authorizeRequest($request));
+		$this->assertFalse( $endpoint->authorizeRequest($request));
 
 
 	}
@@ -86,5 +86,16 @@ class VerifyTokenTest extends TestCase
 		$wpJwt = Mockery::mock(\calderawp\caldera\restApi\Authentication\WordPressUserJwt::class );
 		$endpoint = new VerifyToken($wpJwt);
 		$this->assertEquals( '/jwt', $endpoint->getUri() );
+	}
+
+	/**
+	 * @covers \calderawp\caldera\restApi\Authentication\Endpoints\Endpoint::setToken()
+	 */
+	public function testSetToken()
+	{
+		$wpJwt = Mockery::mock(\calderawp\caldera\restApi\Authentication\WordPressUserJwt::class );
+		$endpoint = new VerifyToken($wpJwt);
+		$endpoint->setToken('a');
+		$this->assertAttributeEquals( 'a', 'token', $endpoint );
 	}
 }

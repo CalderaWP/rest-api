@@ -18,6 +18,10 @@ abstract class Endpoint implements EndpointContract
 	 * @var WordPressUserJwt
 	 */
 	protected $wpJwt;
+
+	/** @var @string */
+	protected $token;
+
 	public function __construct(WordPressUserJwt $wpJwt )
 	{
 		$this->wpJwt = $wpJwt;
@@ -39,8 +43,19 @@ abstract class Endpoint implements EndpointContract
 	/** @inheritdoc */
 	public function getToken(Request $request): string
 	{
-		//not used
-		return '';
+
+		return $this->token ? $this->token : '';
+	}
+
+	/**
+	 * @param string $token
+	 *
+	 * @return Endpoint
+	 */
+	public function setToken( string $token ) : Endpoint
+	{
+		$this->token= $token;
+		return $this;
 	}
 
 }
