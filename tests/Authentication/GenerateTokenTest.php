@@ -8,6 +8,15 @@ class GenerateTokenTest extends \calderawp\caldera\restApi\Tests\TestCase
 {
 
 	/**
+	 * @covers \calderawp\caldera\restApi\Authentication\Endpoints\GenerateToken::getHttpMethod()
+	 */
+	public function testGetMethod()
+	{
+		$wpJwt = Mockery::mock(\calderawp\caldera\restApi\Authentication\WordPressUserJwt::class);
+		$endpoint = new GenerateToken($wpJwt);
+		$this->assertSame('POST', $endpoint->getHttpMethod());
+	}
+	/**
 	 * @covers \calderawp\caldera\restApi\Authentication\Endpoints\GenerateToken::getArgs()
 	 */
 	public function testGetArgs()
@@ -69,7 +78,6 @@ class GenerateTokenTest extends \calderawp\caldera\restApi\Tests\TestCase
 		$response = $endpoint->handleRequest($request);
 		$this->assertFalse($response->getData()[ 'token' ]);
 		$this->assertSame(401, $response->getStatus());
-
 	}
 
 	/**
@@ -90,7 +98,7 @@ class GenerateTokenTest extends \calderawp\caldera\restApi\Tests\TestCase
 			->andReturn($userFactory);
 
 		$wpJwt
-			->shouldReceive('tokenFromUser' )
+			->shouldReceive('tokenFromUser')
 			->andThrow(\calderawp\caldera\restApi\Authentication\AuthenticationException::class);
 		$endpoint = new GenerateToken($wpJwt);
 		$request = Mockery::mock(\calderawp\caldera\restApi\Request::class);
@@ -100,6 +108,5 @@ class GenerateTokenTest extends \calderawp\caldera\restApi\Tests\TestCase
 		$response = $endpoint->handleRequest($request);
 		$this->assertFalse($response->getData()[ 'token' ]);
 		$this->assertSame(401, $response->getStatus());
-
 	}
 }

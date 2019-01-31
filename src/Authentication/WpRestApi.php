@@ -36,14 +36,35 @@ class WpRestApi implements AuthenticateRestApiContract
 		$this->registerFunction = 'register_rest_route';
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getSiteUrl(): string
+	{
+		return $this->siteUrl;
+	}
 
+
+	/**
+	 * @param string $siteUrl
+	 *
+	 * @return AuthenticateRestApiContract
+	 */
+	public function setSiteUrl(string $siteUrl): AuthenticateRestApiContract
+	{
+		$this->siteUrl = $siteUrl;
+		return $this;
+	}
+
+
+	/**
+	 * Use to init if using with WordPress
+	 *
+	 * @return bool|true|void
+	 */
 	public function addHooks()
 	{
-		add_filter('rest_pre_serve_request', function ($served, $result, $request) {
-			return $served;
-		}, 10, 3);
-		add_filter('determine_current_user', [$this,'determineUser' ]);
-		return add_filter('rest_api_init', [$this, 'initTokenRoutes' ]);
+		return add_filter('determine_current_user', [$this,'determineUser' ]);
 	}
 
 	/**
@@ -61,8 +82,8 @@ class WpRestApi implements AuthenticateRestApiContract
 	 */
 	public function initTokenRoutes() :AuthenticateRestApiContract
 	{
-		$verifyToken = (new VerifyToken($this->wpJwt))->setToken($this->token);
-		$generateToken = (new GenerateToken($this->wpJwt))->setToken($this->token);
+		$verifyToken = (new VerifyToken($this->wpJwt))->setToken($this->token ? $this->token : '');
+		$generateToken = (new GenerateToken($this->wpJwt))->setToken($this->token ? $this->token : '');
 		$this->registerRouteWithWordPress($verifyToken);
 		$this->registerRouteWithWordPress($generateToken);
 		return $this;

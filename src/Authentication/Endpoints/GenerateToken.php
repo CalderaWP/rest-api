@@ -28,6 +28,10 @@ class GenerateToken extends Endpoint
 		];
 	}
 
+	public function getHttpMethod(): string
+	{
+		return 'POST';
+	}
 
 	/** @inheritdoc */
 	public function handleRequest(RestRequestContract $request): RestResponseContract

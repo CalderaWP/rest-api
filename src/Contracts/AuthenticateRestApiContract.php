@@ -31,4 +31,13 @@ interface AuthenticateRestApiContract
 	 * Probably from $_SERVER[ 'HTTP_AUTHORIZATION' ]
 	 */
 	public function setTokenFromHeaders(): void;
+
+	/**
+	 * (re)set site URL
+	 *
+	 * @param string $siteUrl
+	 *
+	 * @return AuthenticateRestApiContract
+	 */
+	public function setSiteUrl(string $siteUrl): AuthenticateRestApiContract;
 }

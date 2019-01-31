@@ -16,7 +16,7 @@ abstract class TestCase extends \Mockery\Adapter\Phpunit\MockeryTestCase
 
 	public function setUp()
 	{
-		if( ! $_ENV ){
+		if (! $_ENV) {
 			$_ENV = [];
 		}
 		$_ENV[ 'JWT_SECRET' ] = '12322334';

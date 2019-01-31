@@ -33,7 +33,6 @@ class WordPressUserJwtTest extends \calderawp\caldera\restApi\Tests\TestCase
 			]
 		], $secret);
 		$this->assertEquals($user, $jwt->userFromToken($token));
-
 	}
 
 	/** @covers \calderawp\caldera\restApi\Authentication\WordPressUserJwt::userFromToken() */
@@ -46,7 +45,6 @@ class WordPressUserJwtTest extends \calderawp\caldera\restApi\Tests\TestCase
 		$userFactory = Mockery::mock(UserFactoryContract::class);
 		$jwt = new WordPressUserJwt($userFactory, $secret, $iss);
 		$jwt->userFromToken('aaaa');//random token
-
 	}
 
 
@@ -55,7 +53,7 @@ class WordPressUserJwtTest extends \calderawp\caldera\restApi\Tests\TestCase
 	{
 		$this->expectException(\calderawp\caldera\restApi\Authentication\AuthenticationException::class);
 		$this->expectExceptionCode(401);
-		$this->expectExceptionMessage( 'Invalid Token ISS');
+		$this->expectExceptionMessage('Invalid Token ISS');
 		$secret = '1234';
 		$iss = 'https://hiroy.club';
 		$userFactory = Mockery::mock(UserFactoryContract::class);
@@ -71,14 +69,13 @@ class WordPressUserJwtTest extends \calderawp\caldera\restApi\Tests\TestCase
 			]
 		], $secret);
 		$this->assertEquals($user, $jwt->userFromToken($token));
-
 	}
 
 	/** @covers \calderawp\caldera\restApi\Authentication\WordPressUserJwt::userFromToken() */
 	public function testUserFromTokenMissingId()
 	{
 		$this->expectExceptionCode(401);
-		$this->expectExceptionMessage( 'Invalid User');
+		$this->expectExceptionMessage('Invalid User');
 		$secret = '1234';
 		$iss = 'https://hiroy.club';
 		$userFactory = Mockery::mock(UserFactoryContract::class);
@@ -94,14 +91,13 @@ class WordPressUserJwtTest extends \calderawp\caldera\restApi\Tests\TestCase
 			]
 		], $secret);
 		$this->assertEquals($user, $jwt->userFromToken($token));
-
 	}
 
 	/** @covers \calderawp\caldera\restApi\Authentication\WordPressUserJwt::userFromToken() */
 	public function testUserFromTokenDifferentUserId()
 	{
 		$this->expectExceptionCode(401);
-		$this->expectExceptionMessage( 'Invalid User');
+		$this->expectExceptionMessage('Invalid User');
 		$secret = '1234';
 		$iss = 'https://hiroy.club';
 		$userFactory = Mockery::mock(UserFactoryContract::class);
@@ -118,14 +114,13 @@ class WordPressUserJwtTest extends \calderawp\caldera\restApi\Tests\TestCase
 			]
 		], $secret);
 		$this->assertEquals($user, $jwt->userFromToken($token));
-
-
 	}
 
 
 	/** @covers \calderawp\caldera\restApi\Authentication\WordPressUserJwt::tokenFromUser() */
 	public function testTokenFromUser()
-	{	$secret = '1234';
+	{
+		$secret = '1234';
 		$iss = 'https://hiroy.club';
 		$user = Mockery::mock('\WP_User');
 		$user->ID = 1;
@@ -142,6 +137,6 @@ class WordPressUserJwtTest extends \calderawp\caldera\restApi\Tests\TestCase
 		$iss = 'https://hiroy.club';
 		$userFactory = Mockery::mock(UserFactoryContract::class);
 		$jwt = new WordPressUserJwt($userFactory, $secret, $iss);
-		$this->assertSame($userFactory,$jwt->getUserFactory());
+		$this->assertSame($userFactory, $jwt->getUserFactory());
 	}
 }

@@ -3,7 +3,6 @@
 
 namespace calderawp\caldera\restApi\Tests\Mocks;
 
-
 use calderawp\caldera\restApi\Traits\CreatesWordPressEndpoints;
 
 class RegisterEndpointsWithWordPressMock
@@ -29,5 +28,4 @@ class RegisterEndpointsWithWordPressMock
 	{
 		$this->callbackCalled = true;
 	}
-
 }

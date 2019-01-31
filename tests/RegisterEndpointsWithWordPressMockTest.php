@@ -29,8 +29,7 @@ class RegisterEndpointsWithWordPressMockTest extends TestCase
 
 		$test = new RegisterEndpointsWithWordPressMock();
 		$test->registerRouteWithWordPress($endpoint);
-		$this->assertAttributeEquals(true, 'callbackCalled', $test );
-
+		$this->assertAttributeEquals(true, 'callbackCalled', $test);
 	}
 
 	/**
