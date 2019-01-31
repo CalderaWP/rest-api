@@ -5,10 +5,14 @@
     xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.0/phpunit.xsd"
     colors="true">
     <testsuites>
-        <testsuite name="Test Suite">
+        <testsuite name="Unit">
             <directory>./tests</directory>
         </testsuite>
+        <testsuite name="Acceptance">
+            <directory>./acceptance</directory>
+        </testsuite>
     </testsuites>
+
 
     <filter>
         <whitelist>

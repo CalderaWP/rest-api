@@ -106,7 +106,10 @@ The `calderawp/http` package already has conversion from Caldera HTTP request/re
 It is not uncommon for a REST API route to act as a proxy for a 3rd-party API. For example, a request to a Caldera endpoint might cause the system to find Stripe credentials, use them to query the Stripe API and then return formatted results to the client. In this case an HTTP request must be made on the server. This request MUST be made using the `calderawp/http` package. See that package's README for more info.
 
 ### Sending Responses
-Your route MUST send a 
+
+
+## WordPress JWT Authentication
+[See](./src/Authentication/README.MD)
 
 ## Testing
 * Run all tests (JK, just unit tests beacuse that's the pattern)

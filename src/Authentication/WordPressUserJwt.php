@@ -42,11 +42,10 @@ class WordPressUserJwt implements WordPressUserContract
 	 */
 	public function userFromToken(string $token): \WP_User
 	{
-
 		try {
 			$token = \Firebase\JWT\JWT::decode($token, $this->secret, ['HS256']);
 		} catch (\Exception $e) {
-			throw new AuthenticationException($e->getMessage(), 500);
+			throw new AuthenticationException($token, 500);
 		}
 
 		if (!hash_equals($this->siteUrl, $token->iss)) {
