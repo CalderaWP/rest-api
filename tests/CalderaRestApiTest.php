@@ -10,7 +10,9 @@ use calderawp\caldera\restApi\Routes\EntryRoute;
 use calderawp\caldera\restApi\Routes\FormRoute;
 use calderawp\CalderaContainers\Service\Container;
 use \calderawp\interop\Contracts\TokenContract;
-
+use calderawp\caldera\restApi\Contracts\AuthenticateRestApiContract as WpRestApiAuth;
+use calderawp\caldera\restApi\Contracts\UserFactoryContract as UserFactory;
+use calderawp\caldera\restApi\Contracts\WordPressUserContract as WordPressUser;
 class CalderaRestApiTest extends TestCase
 {
 
@@ -42,6 +44,10 @@ class CalderaRestApiTest extends TestCase
 
 		$route = $restApi->getRoute(EntryRoute::class);
 		$this->assertCount(3, $route->getEndpoints());
+
+		$this->assertIsObject($restApi->getServiceContainer()->make(WpRestApiAuth::class ));
+		$this->assertIsObject($restApi->getServiceContainer()->make(UserFactory::class ));
+		$this->assertIsObject($restApi->getServiceContainer()->make(WordPressUser::class ));
 	}
 
 	/**
@@ -95,5 +101,11 @@ class CalderaRestApiTest extends TestCase
 		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
 		$route = new FormRoute($restApi);
 		$this->assertInstanceOf(FormRoute::class, $restApi->getRoute(FormRoute::class));
+	}
+
+	public function testGetWpRestApiAuth()
+	{
+		$restApi = new CalderaRestApi($this->core(), $this->serviceContainer());
+		$this->assertInstanceOf(WpRestApiAuth::class, $restApi->getWpRestApiAuth() );
 	}
 }

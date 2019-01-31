@@ -2,10 +2,11 @@
 
 
 namespace calderawp\caldera\restApi\Authentication;
+
 use calderawp\caldera\restApi\Contracts\UserFactoryContract as UserFactory;
+use calderawp\caldera\restApi\Contracts\WordPressUserContract;
 
-
-class WordPressUserJwt
+class WordPressUserJwt implements WordPressUserContract
 {
 
 	/** @var string */
@@ -14,7 +15,7 @@ class WordPressUserJwt
 	/** @var UserFactory */
 	protected $userFactory;
 
-	public function __construct(UserFactory$userFactory,string $secret, string $siteUrl)
+	public function __construct(UserFactory$userFactory, string $secret, string $siteUrl)
 	{
 		$this->userFactory = $userFactory;
 		$this->secret = $secret;
@@ -88,7 +89,7 @@ class WordPressUserJwt
 				$data
 			]),
 		];
-		$token = \Firebase\JWT\JWT::encode( $tokenData, $this->secret );
+		$token = \Firebase\JWT\JWT::encode($tokenData, $this->secret);
 
 		return $token;
 	}

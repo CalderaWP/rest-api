@@ -2,11 +2,11 @@
 
 
 namespace calderawp\caldera\restApi\Authentication\Endpoints;
+
 use calderawp\caldera\restApi\Authentication\AuthenticationException;
 use calderawp\caldera\restApi\Response;
 use calderawp\interop\Contracts\Rest\RestRequestContract;
 use calderawp\interop\Contracts\Rest\RestResponseContract;
-
 
 class GenerateToken extends Endpoint
 {
@@ -33,8 +33,8 @@ class GenerateToken extends Endpoint
 	public function handleRequest(RestRequestContract $request): RestResponseContract
 	{
 		$headers = [];
-		$userName = $request->getParam( 'user' );
-		$password = $request->getParam( 'pass' );
+		$userName = $request->getParam('user');
+		$password = $request->getParam('pass');
 
 		try {
 			$user = $this->wpJwt->getUserFactory()->fromNamePass($userName, $password);

@@ -2,6 +2,7 @@
 
 
 namespace calderawp\caldera\restApi\Authentication\Endpoints;
+
 use calderawp\caldera\restApi\Authentication\AuthenticationException;
 use calderawp\caldera\restApi\Authentication\UserNotFoundException;
 use calderawp\caldera\restApi\Response;

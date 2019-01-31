@@ -5,6 +5,7 @@ namespace calderawp\caldera\restApi\Contracts;
 
 use calderawp\caldera\Events\CalderaEvents;
 use calderawp\interop\Contracts\CalderaModule;
+use calderawp\caldera\restApi\Contracts\AuthenticateRestApiContract as WpRestApiAuth;
 
 interface CalderaRestApiContract extends CalderaModule
 {
@@ -17,4 +18,6 @@ interface CalderaRestApiContract extends CalderaModule
 	public function addRoute(RouteContract $route): CalderaRestApiContract;
 
 	public function getRoute(string $className) : RouteContract;
+
+	public function getWpRestApiAuth() :WpRestApiAuth;
 }

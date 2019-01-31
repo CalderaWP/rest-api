@@ -5,6 +5,9 @@ namespace calderawp\caldera\restApi;
 
 use calderawp\caldera\Forms\Controllers\EntryController;
 use calderawp\caldera\Forms\Controllers\FormsController;
+use calderawp\caldera\restApi\Authentication\WordPressUserFactory;
+use calderawp\caldera\restApi\Authentication\WordPressUserJwt;
+use calderawp\caldera\restApi\Authentication\WpRestApi;
 use calderawp\caldera\restApi\Contracts\CalderaRestApiContract;
 use calderawp\caldera\Events\CalderaEvents;
 use calderawp\caldera\restApi\Endpoints\Entry\CreateEntry;
@@ -14,14 +17,14 @@ use calderawp\caldera\restApi\Endpoints\Form\GetForm;
 use calderawp\caldera\restApi\Endpoints\Form\GetForms;
 use calderawp\caldera\restApi\Routes\EntryRoute;
 use calderawp\caldera\restApi\Routes\FormRoute;
-use calderawp\caldera\restApi\Token\Csfr;
 use calderawp\interop\Contracts\CalderaModule;
 use calderawp\interop\Module;
 use calderawp\CalderaContainers\Service\Container as ServiceContainer;
 use calderawp\caldera\restApi\Contracts\RouteContract;
-use \calderawp\interop\Contracts\TokenContract;
-use Symfony\Component\Security\Csrf\CsrfTokenManager;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+
+use calderawp\caldera\restApi\Contracts\AuthenticateRestApiContract as WpRestApiAuth;
+use calderawp\caldera\restApi\Contracts\UserFactoryContract as UserFactory;
+use calderawp\caldera\restApi\Contracts\WordPressUserContract as WordPressUser;
 
 class CalderaRestApi extends Module implements CalderaRestApiContract
 {
@@ -58,13 +61,26 @@ class CalderaRestApi extends Module implements CalderaRestApiContract
 				])
 		);
 
-		$container
-			->singleton(
-				CsrfTokenManagerInterface::class,
-				function () {
-					return new CsrfTokenManager();
-				}
+		$container->bind(UserFactory::class, function () {
+			return new WordPressUserFactory();
+		});
+
+		$siteUrl = isset($_ENV[ 'WP_SITE_URL' ]) ? $_ENV[ 'WP_SITE_URL' ] : 'https://caldera.lando.site';
+		$container->bind(WordPressUser::class, function () use ($container, $siteUrl) {
+			return new WordPressUserJwt(
+				$container->make(UserFactory::class),
+				$_ENV[ 'JWT_SECRET' ],
+				$siteUrl
 			);
+		});
+
+
+		$container->singleton(WpRestApiAuth::class, function () use ($container, $siteUrl) {
+			return new WpRestApi(
+				$container->make(WordPressUser::class),
+				$siteUrl
+			);
+		});
 
 		return $this;
 	}
@@ -89,5 +105,11 @@ class CalderaRestApi extends Module implements CalderaRestApiContract
 			return $this->routes[ $className ];
 		}
 		throw new Exception('Route not registered', 500);
+	}
+
+
+	public function getWpRestApiAuth() :WpRestApiAuth
+	{
+		return$this->getServiceContainer()->make(WpRestApiAuth::class);
 	}
 }

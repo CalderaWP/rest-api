@@ -4,6 +4,7 @@
 namespace calderawp\caldera\restApi\Authentication;
 
 use calderawp\caldera\restApi\Contracts\UserFactoryContract;
+
 class WordPressUserFactory implements UserFactoryContract
 {
 
@@ -16,11 +17,11 @@ class WordPressUserFactory implements UserFactoryContract
 	 * @return \WP_User
 	 * @throws UserNotFoundException
 	 */
-	public function byId(int $id ): \WP_User
+	public function byId(int $id): \WP_User
 	{
-		$user = get_user_by('id', $id );
-		if( ! $user ){
-			throw new UserNotFoundException('User Not Found', 404 );
+		$user = get_user_by('id', $id);
+		if (! $user) {
+			throw new UserNotFoundException('User Not Found', 404);
 		}
 		return $user;
 	}
@@ -36,10 +37,9 @@ class WordPressUserFactory implements UserFactoryContract
 	 */
 	public function fromNamePass(string $user, string $pass)
 	{
-		$user = wp_authenticate($user,$pass);
-		if(  is_wp_error( $user ) ){
-			throw new AuthenticationException( 'Invalid user or password', 401 );
-
+		$user = wp_authenticate($user, $pass);
+		if (is_wp_error($user)) {
+			throw new AuthenticationException('Invalid user or password', 401);
 		}
 		return $user;
 	}

@@ -3,8 +3,6 @@
 
 namespace calderawp\caldera\restApi\Traits;
 
-
-
 use calderawp\caldera\restApi\Contracts\RouteContract as Route;
 use calderawp\caldera\restApi\Request;
 
@@ -20,7 +18,7 @@ trait CreatesWordPressEndpoints
 	 */
 	public function registerRouteWithWordPress(Endpoint $endpoint)
 	{
-		call_user_func($this->registerFunction,$this->namespace, $endpoint->getUri(), $this->wpArgs($endpoint ) );
+		call_user_func($this->registerFunction, $this->namespace, $endpoint->getUri(), $this->wpArgs($endpoint));
 	}
 
 	/**
@@ -30,8 +28,9 @@ trait CreatesWordPressEndpoints
 	 *
 	 * @return array
 	 */
-	public function wpArgs(Endpoint $endpoint){
-		$callback = function(\WP_REST_Request $_request) use ($endpoint){
+	public function wpArgs(Endpoint $endpoint)
+	{
+		$callback = function (\WP_REST_Request $_request) use ($endpoint) {
 			$request = $this->requestFromWp($_request);
 			$response = $endpoint->handleRequest($request);
 			return new \WP_REST_Response(
@@ -39,7 +38,6 @@ trait CreatesWordPressEndpoints
 				$response->getStatus(),
 				$response->getHeaders()
 			);
-
 		};
 
 		$permissionsCallback = function ($_request) use ($endpoint) {
@@ -60,7 +58,7 @@ trait CreatesWordPressEndpoints
 	 *
 	 * @return Request
 	 */
-	protected  function requestFromWp(\WP_REST_Request $_request): Request
+	protected function requestFromWp(\WP_REST_Request $_request): Request
 	{
 		$request = new Request();
 		$request->setParams($_request->get_params());
@@ -75,9 +73,8 @@ trait CreatesWordPressEndpoints
 	 */
 	protected function registerRoute(Route $route)
 	{
-		foreach ($route->getEndpoints() as $endpoint ){
+		foreach ($route->getEndpoints() as $endpoint) {
 			$this->registerRouteWithWordPress($endpoint);
 		}
 	}
-
 }

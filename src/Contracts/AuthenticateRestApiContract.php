@@ -3,7 +3,6 @@
 
 namespace calderawp\caldera\restApi\Contracts;
 
-
 interface AuthenticateRestApiContract
 {
 

@@ -3,7 +3,6 @@
 
 namespace calderawp\caldera\restApi\Authentication\Endpoints;
 
-
 use calderawp\caldera\restApi\Authentication\WordPressUserJwt;
 use calderawp\caldera\restApi\CalderaRestApi;
 use calderawp\interop\Contracts\Rest\Endpoint as EndpointContract;
@@ -22,7 +21,7 @@ abstract class Endpoint implements EndpointContract
 	/** @var @string */
 	protected $token;
 
-	public function __construct(WordPressUserJwt $wpJwt )
+	public function __construct(WordPressUserJwt $wpJwt)
 	{
 		$this->wpJwt = $wpJwt;
 	}
@@ -52,10 +51,9 @@ abstract class Endpoint implements EndpointContract
 	 *
 	 * @return Endpoint
 	 */
-	public function setToken( string $token ) : Endpoint
+	public function setToken(string $token) : Endpoint
 	{
 		$this->token= $token;
 		return $this;
 	}
-
 }

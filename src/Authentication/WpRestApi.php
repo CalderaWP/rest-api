@@ -3,8 +3,6 @@
 
 namespace calderawp\caldera\restApi\Authentication;
 
-
-
 use calderawp\caldera\restApi\Authentication\Endpoints\GenerateToken;
 use calderawp\caldera\restApi\Authentication\Endpoints\VerifyToken;
 use calderawp\caldera\restApi\Traits\CreatesWordPressEndpoints;
@@ -30,7 +28,7 @@ class WpRestApi implements AuthenticateRestApiContract
 	/** @var WordPressUserJwt */
 	protected $wpJwt;
 
-	public function __construct(WordPressUserJwt $wpJwt, string $siteUrl )
+	public function __construct(WordPressUserJwt $wpJwt, string $siteUrl)
 	{
 
 		$this->wpJwt = $wpJwt;
@@ -39,12 +37,13 @@ class WpRestApi implements AuthenticateRestApiContract
 	}
 
 
-	public function addHooks(){
-		add_filter( 'rest_pre_serve_request', function( $served, $result, $request) {
+	public function addHooks()
+	{
+		add_filter('rest_pre_serve_request', function ($served, $result, $request) {
 			return $served;
-		}, 10,3 );
-		add_filter( 'determine_current_user', [$this,'determineUser' ]);
-		return add_filter( 'rest_api_init', [$this, 'initTokenRoutes' ] );
+		}, 10, 3);
+		add_filter('determine_current_user', [$this,'determineUser' ]);
+		return add_filter('rest_api_init', [$this, 'initTokenRoutes' ]);
 	}
 
 	/**
@@ -77,11 +76,11 @@ class WpRestApi implements AuthenticateRestApiContract
 	 */
 	public function determineUser(?int $user_id)
 	{
-		if( $user_id ){
+		if ($user_id) {
 			return $user_id;
 		}
 		$this->setTokenFromHeaders();
-		if (! empty( $this->getToken())) {
+		if (! empty($this->getToken())) {
 			try {
 				$user = $this->wpJwt->userFromToken($this->getToken());
 				$user_id = $user->ID;
@@ -90,12 +89,10 @@ class WpRestApi implements AuthenticateRestApiContract
 			}
 		}
 		return $user_id;
-
 	}
 
 	public function setTokenFromHeaders(): void
 	{
 		$this->token = isset($_SERVER[ 'HTTP_AUTHORIZATION' ]) ? strip_tags($_SERVER[ 'HTTP_AUTHORIZATION' ]) : '';
 	}
-
 }

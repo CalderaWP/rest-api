@@ -3,7 +3,6 @@
 
 namespace calderawp\caldera\restApi\Contracts;
 
-
 use calderawp\caldera\restApi\Authentication\AuthenticationException;
 use calderawp\caldera\restApi\Authentication\UserNotFoundException;
 
@@ -17,7 +16,7 @@ interface UserFactoryContract
 	 * @return \WP_User
 	 * @throws UserNotFoundException
 	 */
-	public function byId(int $id ): \WP_User;
+	public function byId(int $id): \WP_User;
 
 	/**
 	 * Attempt to login a user by WordPress user/pass

@@ -10,7 +10,7 @@ use calderawp\caldera\restApi\Contracts\UserFactoryContract;
 class WordPressTest extends \calderawp\caldera\restApi\Tests\TestCase
 {
 
-	protected function setUp()
+	public function setUp()
 	{
 		$_SERVER['HTTP_AUTHORIZATION'] = '1234';
 		parent::setUp();
