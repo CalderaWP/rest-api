@@ -79,17 +79,19 @@ class GenerateTokenTest extends \calderawp\caldera\restApi\Tests\TestCase
 	{
 
 		$user = Mockery::mock('\Wp_User');
-		$userFactory = Mockery::mock(UserFactoryContract::class)
+		$userFactory = Mockery::mock(UserFactoryContract::class);
+		$userFactory
 			->shouldReceive('fromNamePass')
 			->andReturn($user);
 
-		$userFactory
-			->shouldReceive('tokenFromUser')
-			->andThrow(\calderawp\caldera\restApi\Authentication\AuthenticationException::class);
 		$wpJwt = Mockery::mock(\calderawp\caldera\restApi\Authentication\WordPressUserJwt::class);
 		$wpJwt
 			->shouldReceive('getUserFactory')
 			->andReturn($userFactory);
+
+		$wpJwt
+			->shouldReceive('tokenFromUser' )
+			->andThrow(\calderawp\caldera\restApi\Authentication\AuthenticationException::class);
 		$endpoint = new GenerateToken($wpJwt);
 		$request = Mockery::mock(\calderawp\caldera\restApi\Request::class);
 		$request
