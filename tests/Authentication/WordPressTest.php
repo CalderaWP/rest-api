@@ -80,4 +80,18 @@ class WordPressTest extends \calderawp\caldera\restApi\Tests\TestCase
 		$auth->setTokenFromHeaders();
 		$this->assertAttributeEquals('1234', 'token', $auth);
 	}
+
+	/**
+	 * @covers \calderawp\caldera\restApi\Authentication\WpRestApi::setTokenFromHeaders()
+	 */
+	public function testSetTokenFromHeadersRemovingBearer()
+	{
+		$_SERVER['HTTP_AUTHORIZATION'] = 'Bearer 1234';
+
+		$jwt = Mockery::mock(\calderawp\caldera\restApi\Authentication\WordPressUserJwt::class);
+		$siteUrl = 'https://calderaforms.com';
+		$auth = new WpRestApi($jwt, $siteUrl);
+		$auth->setTokenFromHeaders();
+		$this->assertAttributeEquals('1234', 'token', $auth);
+	}
 }

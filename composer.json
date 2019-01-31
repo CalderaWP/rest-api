@@ -35,7 +35,7 @@
     "scripts": {
         "test": "composer test:unit",
         "test:unit": "phpunit tests --testsuite=Unit",
-        "test:acceptance": "phpunit --testsuite=Acceptance",
+        "test:acceptance": "phpunit --testsuite=Acceptance --bootstrap=tests/bootstrap.php",
         "tests-now": "phpunit tests --group=now",
         "sniffs": "phpcs src/ && phpcs src/",
         "fixes": "phpcbf src/ && phpcbf tests/"

@@ -3,15 +3,15 @@
 
 namespace calderawp\caldera\restApi\Acceptance;
 
-
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 class WpApiAuthTest extends TestCase
 {
 
+	protected $wpApiUrl = 'https://caldera.lndo.site/wp-json';
 
-	protected $wpApiUrl = 'https://caldera.lndo.site/wp-json/caldera-api/v1';
 
 	public function testCanReachWordPressViaHttp()
 	{
@@ -25,7 +25,7 @@ class WpApiAuthTest extends TestCase
 	public function testCanExchangeUserCredsForJwt()
 	{
 		$client = new Client();
-		$url = "$this->wpApiUrl/jwt";
+		$url = "$this->wpApiUrl/caldera-api/v1/jwt";
 		$response = $client->request('POST', $url, [
 			'verify' => false,
 			'json' => [
@@ -47,7 +47,7 @@ class WpApiAuthTest extends TestCase
 		$this->expectException(GuzzleException::class);
 
 		$client = new Client();
-		$url = "$this->wpApiUrl/jwt";
+		$url = "$this->wpApiUrl/caldera-api/v1/jwt";
 		$client->request('POST', $url, [
 			'verify' => false,
 			'json' => [
@@ -61,7 +61,7 @@ class WpApiAuthTest extends TestCase
 	public function testCanVerifyToken()
 	{
 		$client = new Client();
-		$url = "$this->wpApiUrl/jwt";
+		$url = "$this->wpApiUrl/caldera-api/v1/jwt";
 		$response = $client->request('POST', $url, [
 			'verify' => false,
 			'json' => [
@@ -102,6 +102,37 @@ class WpApiAuthTest extends TestCase
 		$this->assertIsString($body[ 'token' ]);
 		$this->assertTrue($body[ 'verified' ]);
 		$this->assertSame('valid', $body[ 'message' ]);
+
+	}
+
+	public function testCanUseTokenAsAdmin()
+	{
+		$client = new Client();
+		$url = "$this->wpApiUrl/caldera-api/v1/jwt";
+		$response = $client->request('POST', $url, [
+			'verify' => false,
+			'json' => [
+				'user' => 'admin',
+				'pass' => 'password',
+			],
+		]);
+		$body = json_decode($response->getBody(), true);
+		$token = $body[ 'token' ];
+
+		$headers = [
+			'Authorization' => 'Bearer: ' . $token,
+			'Accept' => 'application/json',
+			'X-WP-NONCE' => '1',
+		];
+
+		$response = $client->request( 'GET', "{$this->wpApiUrl}/wp/v2/users/me", [
+			'headers' => $headers,
+			'verify' => false,
+			'json' => [
+				'title' => 'This was created beacuse token authorized admin',
+			]
+		]);
+		$this->assertSame(200, $response->getStatusCode());
 
 	}
 }
