@@ -2,6 +2,7 @@
 
 
 namespace calderawp\caldera\restApi\Authentication;
+use calderawp\caldera\restApi\Contracts\UserFactoryContract as UserFactory;
 
 
 class WordPressUserJwt
@@ -10,8 +11,24 @@ class WordPressUserJwt
 	/** @var string */
 	protected $siteUrl;
 	protected $secret;
-	/** @var WordPressUserFactory */
+	/** @var UserFactory */
 	protected $userFactory;
+
+	public function __construct(UserFactory$userFactory,string $secret, string $siteUrl)
+	{
+		$this->userFactory = $userFactory;
+		$this->secret = $secret;
+		$this->siteUrl = $siteUrl;
+	}
+
+	/**
+	 * @return UserFactory
+	 */
+	public function getUserFactory(): UserFactory
+	{
+		return $this->userFactory;
+	}
+
 
 	/**
 	 * Attempt to find a WordPress user from a token with their ID encoded in it.
@@ -28,7 +45,7 @@ class WordPressUserJwt
 		try {
 			$token = \Firebase\JWT\JWT::decode($token, $this->secret, ['HS256']);
 		} catch (\Exception $e) {
-			throw new AuthenticationException($e->getMessage(), $e->getCode());
+			throw new AuthenticationException($e->getMessage(), 500);
 		}
 
 		if (!hash_equals($this->siteUrl, $token->iss)) {
@@ -40,6 +57,10 @@ class WordPressUserJwt
 		}
 
 		$user = $this->userFactory->byId($token->data->user->id);
+
+		if ($token->data->user->id != $user->ID) {
+			throw new AuthenticationException('Invalid User', 401);
+		}
 
 		return $user;
 	}
@@ -62,7 +83,7 @@ class WordPressUserJwt
 			'nbf' => $notBefore,
 			'data' => array_merge([
 				'user' => [
-					'id' => $user->data->id,
+					'id' => $user->ID,
 				],
 				$data
 			]),

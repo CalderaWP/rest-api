@@ -3,8 +3,8 @@
 
 namespace calderawp\caldera\restApi\Authentication;
 
-
-class WordPressUserFactory
+use calderawp\caldera\restApi\Contracts\UserFactoryContract;
+class WordPressUserFactory implements UserFactoryContract
 {
 
 
@@ -37,7 +37,7 @@ class WordPressUserFactory
 	public function fromNamePass(string $user, string $pass)
 	{
 		$user = wp_authenticate($user,$pass);
-		if( ! $user || is_wp_error( $user ) ){
+		if(  is_wp_error( $user ) ){
 			throw new AuthenticationException( 'Invalid user or password', 401 );
 
 		}

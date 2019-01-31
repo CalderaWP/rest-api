@@ -36,18 +36,25 @@ class GenerateToken extends Endpoint
 		$userName = $request->getParam( 'user' );
 		$password = $request->getParam( 'pass' );
 
-
 		try {
-			$token = $this->wpJwt->tokenFromUser($userName, $password);
+			$user = $this->wpJwt->getUserFactory()->fromNamePass($userName, $password);
 		} catch (AuthenticationException $e) {
 			return Response::fromArray([
-				'status' => $e->getCode(),
+				'status' => 401,
 				'data' => [ 'verified' => false, 'message' => $e->getMessage(), 'token' => false ],
 				'headers' => $headers
 			]);
 		}
 
-		$token = $this->wpJwt->tokenFromUser($user );
+		try {
+			$token = $this->wpJwt->tokenFromUser($user);
+		} catch (AuthenticationException $e) {
+			return Response::fromArray([
+				'status' => 401,
+				'data' => [ 'verified' => false, 'message' => $e->getMessage(), 'token' => false ],
+				'headers' => $headers
+			]);
+		}
 
 		return Response::fromArray([
 			'status' => 201,

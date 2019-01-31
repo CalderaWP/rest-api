@@ -37,24 +37,6 @@ class VerifyTokenTest extends TestCase
 	}
 
 	/**
-	 * @covers \calderawp\caldera\restApi\Authentication\Endpoints\VerifyToken::authorizeRequest()
-	 */
-	public function testHandleInvalidRequest()
-	{
-		$token = 'token.token.token';
-		$wpJwt = Mockery::mock(\calderawp\caldera\restApi\Authentication\WordPressUserJwt::class );
-		$wpJwt->shouldReceive('tokenFromUser')
-			->andReturn( false );
-		$endpoint = new VerifyToken($wpJwt);
-		$request = Mockery::mock(\calderawp\caldera\restApi\Request::class );
-		$this->expectException(\Exception::class);
-
-		$this->assertFalse( $endpoint->authorizeRequest($request));
-
-
-	}
-
-	/**
 	 * @covers \calderawp\caldera\restApi\Authentication\Endpoints\Endpoint::getToken()
 	 */
 	public function testGetToken()
