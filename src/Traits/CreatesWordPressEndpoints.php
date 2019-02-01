@@ -18,7 +18,13 @@ trait CreatesWordPressEndpoints
 	 */
 	public function registerRouteWithWordPress(Endpoint $endpoint)
 	{
-		call_user_func($this->registerFunction, $this->namespace, $endpoint->getUri(), $this->wpArgs($endpoint));
+		call_user_func($this->registerFunction, $this->getNamespace(), $endpoint->getUri(), $this->wpArgs($endpoint));
+	}
+
+
+	protected function getNamespace()
+	{
+		return 'caldera-api/v1';
 	}
 
 	/**
@@ -30,20 +36,8 @@ trait CreatesWordPressEndpoints
 	 */
 	public function wpArgs(Endpoint $endpoint)
 	{
-		$callback = function (\WP_REST_Request $_request) use ($endpoint) {
-			$request = $this->requestFromWp($_request);
-			$response = $endpoint->handleRequest($request);
-			return new \WP_REST_Response(
-				$response->getData(),
-				$response->getStatus(),
-				$response->getHeaders()
-			);
-		};
-
-		$permissionsCallback = function ($_request) use ($endpoint) {
-			$request = $this->requestFromWp($_request);
-			return $endpoint->authorizeRequest($request);
-		};
+		$callback = $this->createCallBack([$endpoint,'handleRequest']);
+		$permissionsCallback = $this->createAuthCallBack([$endpoint,'authorizeRequest']);
 		return [
 			'args' => $endpoint->getArgs(),
 			'methods' => $endpoint->getHttpMethod(),
@@ -52,6 +46,28 @@ trait CreatesWordPressEndpoints
 		];
 	}
 
+	public function createCallBack(callable $handler) : callable
+	{
+		return function (\WP_REST_Request $_request) use ($handler) {
+			$request = $this->requestFromWp($_request);
+			$response = $handler($request);
+			return new \WP_REST_Response(
+				$response->getData(),
+				$response->getStatus(),
+				$response->getHeaders()
+			);
+		};
+
+	}
+
+	public function createAuthCallBack(callable $handler) : callable
+	{
+		return function ($_request) use ($handler) {
+			$request = $this->requestFromWp($_request);
+			return $handler($request);
+		};
+
+	}
 
 	/**
 	 * @param \WP_REST_Request $_request
