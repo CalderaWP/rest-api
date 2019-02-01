@@ -42,7 +42,8 @@ class VerifyTokenTest extends TestCase
 		$wpJwt = Mockery::mock(\calderawp\caldera\restApi\Authentication\WordPressUserJwt::class);
 		$endpoint = new VerifyToken($wpJwt);
 		$request = Mockery::mock(\calderawp\caldera\restApi\Request::class);
-		$this->assertEquals('', $endpoint->getToken($request));
+		$request->shouldReceive('getParam' )->andReturn('a');
+		$this->assertEquals('a', $endpoint->getToken($request));
 	}
 
 	/**
