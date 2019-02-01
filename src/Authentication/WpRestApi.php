@@ -117,7 +117,7 @@ class WpRestApi implements AuthenticateRestApiContract
 		$this->token = isset($_SERVER[ 'HTTP_AUTHORIZATION' ]) ? $this->trimToken($_SERVER[ 'HTTP_AUTHORIZATION' ]) : '';
 	}
 
-	protected function trimToken(string $token ): string
+	protected function trimToken(string $token): string
 	{
 		return strip_tags(trim(str_replace(['Bearer','Bearer: ', 'Bearer:', ':', ': '], '', $token)));
 	}

@@ -27,7 +27,7 @@ class VerifyToken extends Endpoint
 	/** @inheritdoc */
 	public function getToken(RestRequestContract $request): string
 	{
-		return $request->getParam( 'token' );
+		return $request->getParam('token');
 	}
 
 	/** @inheritdoc */
