@@ -57,7 +57,6 @@ trait CreatesWordPressEndpoints
 				$response->getHeaders()
 			);
 		};
-
 	}
 
 	public function createAuthCallBack(callable $handler) : callable
@@ -66,7 +65,6 @@ trait CreatesWordPressEndpoints
 			$request = $this->requestFromWp($_request);
 			return $handler($request);
 		};
-
 	}
 
 	/**
