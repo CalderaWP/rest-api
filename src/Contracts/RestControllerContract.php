@@ -13,9 +13,9 @@ interface RestControllerContract
 	public function update(Request$request ): Response;
 	public function delete(Request$request): Response;
 	public function list(Request$request): Response;
-	public function annonymize(Request$request): Response;
+	public function anonymize(Request$request): Response;
 	public function authorizeRequest(Request$request):bool ;
-	public function search(Request$request):bool ;
+	public function search(Request$request):Response ;
 
 }
 
