@@ -40,9 +40,7 @@ class EndpointTest extends TestCase
 		$request = \Mockery::mock('Request', Request::class);
 		$controller = \Mockery::mock(\calderawp\caldera\Messaging\RestController::class);
 		$controller->shouldReceive('list')->andReturn($_response);
-
-
-		$endpoint = new MockEndpoint($model, $controller, 'LIST');
+		$endpoint = new MockEndpoint($controller, 'LIST', 'hi-roy');
 		$response = $endpoint->handleRequest($request);
 		$this->assertEquals($_response, $response);
 	}
@@ -56,7 +54,7 @@ class EndpointTest extends TestCase
 		$controller->shouldReceive('get')->andReturn($_response);
 
 
-		$endpoint = new MockEndpoint($model, $controller, 'GET');
+		$endpoint = new MockEndpoint($controller, 'GET', 'hi-roy');
 		$response = $endpoint->handleRequest($request);
 		$this->assertEquals($_response, $response);
 	}
@@ -70,7 +68,7 @@ class EndpointTest extends TestCase
 		$controller->shouldReceive('update')->andReturn($_response);
 
 
-		$endpoint = new MockEndpoint($model, $controller, 'POST');
+		$endpoint = new MockEndpoint($controller, 'POST', 'uri/i');
 		$response = $endpoint->handleRequest($request);
 		$this->assertEquals($_response, $response);
 	}
@@ -84,7 +82,7 @@ class EndpointTest extends TestCase
 		$controller->shouldReceive('create')->andReturn($_response);
 
 
-		$endpoint = new MockEndpoint($model, $controller, 'PUT');
+		$endpoint = new MockEndpoint($controller, 'PUT', '/lists');
 		$response = $endpoint->handleRequest($request);
 		$this->assertEquals($_response, $response);
 	}
@@ -97,7 +95,7 @@ class EndpointTest extends TestCase
 		$controller->shouldReceive('anonymize')->andReturn($_response);
 
 
-		$endpoint = new MockEndpoint($model, $controller, 'ANONYMIZE');
+		$endpoint = new MockEndpoint($controller, 'ANONYMIZE', 'lists');
 		$response = $endpoint->handleRequest($request);
 		$this->assertEquals($_response, $response);
 	}

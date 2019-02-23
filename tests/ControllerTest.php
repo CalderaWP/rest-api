@@ -23,20 +23,20 @@ class ControllerTest extends TestCase
 	{
 		$id = 8;
 		$dataSource = \Mockery::mock('DataSource', DataSource::class);
-		$handleAuth = function () {};
+		$handleAuth = function () {
+		};
 		$data = ['id' => $id];
 		$searchValue = 'search for';
 
-		$dataSource->shouldReceive( 'findById' )->with($searchValue, 'id')->andReturn($data);
+		$dataSource->shouldReceive('findById')->with($searchValue, 'id')->andReturn($data);
 
 		$request = \Mockery::mock('Request', Request::class);
 		$request->shouldReceive('getParams')->andReturn(['searchValue' => $searchValue, 'searchColumn' => 'id']);
 
 		$controller = new MockController($dataSource, $handleAuth);
 		$response = $controller->search($request);
-		$this->assertEquals($data,$response->getData() );
-		$this->assertEquals(200,$response->getStatus() );
-
+		$this->assertEquals($data, $response->getData());
+		$this->assertEquals(200, $response->getStatus());
 	}
 
 	public function testSearchByIds()
@@ -44,19 +44,19 @@ class ControllerTest extends TestCase
 
 		$id = 8;
 		$dataSource = \Mockery::mock('DataSource', DataSource::class);
-		$handleAuth = function () {};
+		$handleAuth = function () {
+		};
 		$data = ['id' => $id];
 		$searchValue = [1,'5', ['aaaaaa' => 'sqlAttack'], new \stdClass() ];
-		$dataSource->shouldReceive( 'findIn' )->with([1,5], 'id')->andReturn($data);
+		$dataSource->shouldReceive('findIn')->with([1,5], 'id')->andReturn($data);
 
 		$request = \Mockery::mock('Request', Request::class);
 		$request->shouldReceive('getParams')->andReturn(['searchValue' => $searchValue, 'searchColumn' => 'anything-random-this-does-not-get-user']);
 
 		$controller = new MockController($dataSource, $handleAuth);
 		$response = $controller->search($request);
-		$this->assertEquals($data,$response->getData() );
-		$this->assertEquals(200,$response->getStatus() );
-
+		$this->assertEquals($data, $response->getData());
+		$this->assertEquals(200, $response->getStatus());
 	}
 
 	public function testSearchByWhere()
@@ -64,12 +64,13 @@ class ControllerTest extends TestCase
 
 		$id = 8;
 		$dataSource = \Mockery::mock('DataSource', DataSource::class);
-		$handleAuth = function () {};
+		$handleAuth = function () {
+		};
 		$data = ['id' => $id];
 		$searchValue = 'value';
 		$searchColumn = 'name';
-		$dataSource->shouldReceive( 'findWhere' )
-			->with($searchColumn,$searchValue)
+		$dataSource->shouldReceive('findWhere')
+			->with($searchColumn, $searchValue)
 			->andReturn($data);
 
 		$request = \Mockery::mock('Request', Request::class);
@@ -77,34 +78,31 @@ class ControllerTest extends TestCase
 
 		$controller = new MockController($dataSource, $handleAuth);
 		$response = $controller->search($request);
-		$this->assertEquals($data,$response->getData() );
-		$this->assertEquals(200,$response->getStatus() );
-
+		$this->assertEquals($data, $response->getData());
+		$this->assertEquals(200, $response->getStatus());
 	}
 
 	public function testList()
 	{
-		$this->markTestSkipped( 'Method not implemented yet' );
+		$this->markTestSkipped('Method not implemented yet');
 	}
 
 	public function testAuthorizeRequest()
 	{
 
 		$dataSource = \Mockery::mock('DataSource', DataSource::class);
-		$handleAuth = function (Request $request ) {
-			return '12345' === $request->getParam('secret' );
+		$handleAuth = function (Request $request) {
+			return '12345' === $request->getParam('secret');
 		};
 		$controller = new MockController($dataSource, $handleAuth);
 		$request = \Mockery::mock('Request', Request::class);
 		$request->shouldReceive('getParam')->andReturn('12345');
-		$this->assertTrue($controller->authorizeRequest($request) );
+		$this->assertTrue($controller->authorizeRequest($request));
 
 		$controller = new MockController($dataSource, $handleAuth);
 		$request = \Mockery::mock('Request', Request::class);
 		$request->shouldReceive('getParam')->andReturn('1');
-		$this->assertFalse($controller->authorizeRequest($request) );
-
-
+		$this->assertFalse($controller->authorizeRequest($request));
 	}
 
 	public function testUpdate()
@@ -123,8 +121,6 @@ class ControllerTest extends TestCase
 		$response = $controller->update($request);
 		$this->assertEquals(['id' => $id], $response->getData());
 		$this->assertEquals(201, $response->getStatus());
-
-
 	}
 
 	public function testGet()
@@ -142,7 +138,6 @@ class ControllerTest extends TestCase
 		$response = $controller->get($request);
 		$this->assertEquals(['id' => $id], $response->getData());
 		$this->assertEquals(200, $response->getStatus());
-
 	}
 
 	public function testCreate()
@@ -160,7 +155,6 @@ class ControllerTest extends TestCase
 		$response = $controller->create($request);
 		$this->assertEquals(['id' => $id], $response->getData());
 		$this->assertEquals(201, $response->getStatus());
-
 	}
 
 	public function testDelete()
@@ -190,7 +184,6 @@ class ControllerTest extends TestCase
 		$response = $controller->delete($request);
 		$this->assertEquals(['deleted' => false], $response->getData());
 		$this->assertEquals(200, $response->getStatus());
-
 	}
 
 	public function testAnonymize()
@@ -209,6 +202,5 @@ class ControllerTest extends TestCase
 		$response = $controller->anonymize($request);
 		$this->assertEquals(['id' => $id], $response->getData());
 		$this->assertEquals(202, $response->getStatus());
-
 	}
 }

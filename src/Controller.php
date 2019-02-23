@@ -4,6 +4,7 @@
 namespace calderawp\caldera\restApi;
 
 use calderawp\caldera\DataSource\Contracts\SourceContract as DataSource;
+use calderawp\caldera\Messaging\Entities\Recipient;
 use calderawp\DB\Exceptions\InvalidColumnException;
 use calderawp\interop\Contracts\HttpRequestContract as Request;
 use calderawp\interop\Contracts\HttpResponseContract as Response;
@@ -64,7 +65,18 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 
 	public function list(Request $request): Response
 	{
-		return $this->response(['LOL' => true]);
+		$x = $this->dataSource->create([
+			'accountId' => 2,
+			'layout' => 12,
+			'content' => 'x33',
+			'subject' => 'subject',
+			'pdfLayout' => 44,
+			'to' => '',
+			'cc' => '',
+			'bcc' => '',
+
+		]);
+		return $this->response($this->dataSource->findWhere( 'accountId', $request->getParam('accountId') ) );
 	}
 
 	public function anonymize(Request $request): Response

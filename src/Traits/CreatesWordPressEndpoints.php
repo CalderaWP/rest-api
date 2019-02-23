@@ -3,6 +3,7 @@
 
 namespace calderawp\caldera\restApi\Traits;
 
+use calderawp\caldera\Messaging\Message\Attributes;
 use calderawp\caldera\restApi\Contracts\RouteContract as Route;
 use calderawp\caldera\restApi\Request;
 
