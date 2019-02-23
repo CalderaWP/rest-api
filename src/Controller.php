@@ -65,17 +65,6 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 
 	public function list(Request $request): Response
 	{
-		$x = $this->dataSource->create([
-			'accountId' => 2,
-			'layout' => 12,
-			'content' => 'x33',
-			'subject' => 'subject',
-			'pdfLayout' => 44,
-			'to' => '',
-			'cc' => '',
-			'bcc' => '',
-
-		]);
 		return $this->response($this->dataSource->findWhere( 'accountId', $request->getParam('accountId') ) );
 	}
 
@@ -151,6 +140,7 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 	 */
 	private function getId(Request $request)
 	{
+		$id = $request->getParam('id');
 		return $request->getParam('id');
 	}
 }
