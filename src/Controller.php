@@ -40,7 +40,6 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 			return $this->exceptionToResponse($e);
 		}
 		return $this->response(['id' => $id], 201);
-
 	}
 
 	public function update(Request $request): Response
@@ -51,7 +50,6 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 			return $this->exceptionToResponse($e);
 		}
 		return $this->response($data, 201);
-
 	}
 
 	public function delete(Request $request): Response
@@ -62,13 +60,11 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 			return $this->exceptionToResponse($e);
 		}
 		return $this->response(['deleted' => $deleted], $deleted ? 202 : 200);
-
 	}
 
 	public function list(Request $request): Response
 	{
 		return $this->response(['LOL' => true]);
-
 	}
 
 	public function anonymize(Request $request): Response
@@ -80,7 +76,6 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 			return $this->exceptionToResponse($e);
 		}
 		return $this->response($data, 202);
-
 	}
 
 	public function authorizeRequest(Request $request): bool
@@ -125,8 +120,6 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 			}
 		}
 		return $this->response($data);
-
-
 	}
 
 	protected function response(array $data, int $status = 200): Response
@@ -148,6 +141,4 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 	{
 		return $request->getParam('id');
 	}
-
-
 }
