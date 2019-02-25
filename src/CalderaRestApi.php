@@ -69,7 +69,7 @@ class CalderaRestApi extends Module implements CalderaRestApiContract
 		$container->bind(WordPressUser::class, function () use ($container, $siteUrl) {
 			return new WordPressUserJwt(
 				$container->make(UserFactory::class),
-				$_ENV[ 'JWT_SECRET' ],
+				isset( $_ENV[ 'JWT_SECRET' ]) ? $_ENV[ 'JWT_SECRET' ] : 12345,
 				$siteUrl
 			);
 		});
