@@ -45,4 +45,13 @@ interface UserFactoryContract
 	 * @param string $key
 	 */
 	public function setUserPublicKey(int $userId, string $key): void;
+
+	/**
+	 * Get a user's public key, creating if needed.
+	 *
+	 * @param \WP_User $user
+	 *
+	 * @return string
+	 */
+	public function getPublicKeyFromUser(\WP_User $user ) : string;
 }

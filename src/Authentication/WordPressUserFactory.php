@@ -70,4 +70,21 @@ class WordPressUserFactory implements UserFactoryContract
 		delete_user_meta($userId, '_calderaPublicKey');
 		add_user_meta($userId, '_calderaPublicKey', $key);
 	}
+
+	/**
+	 * Get a user's public key, creating if needed.
+	 *
+	 * @param \WP_User $user
+	 *
+	 * @return string
+	 */
+	public function getPublicKeyFromUser(\WP_User $user ) : string
+	{
+		$publicKey = $user->get('_calderaPublicKey');
+		if( empty( $publicKey)){
+			$this->setUserPublicKey($user->ID, wp_generate_password());
+			$publicKey = $user->get('_calderaPublicKey');
+		}
+		return $publicKey;
+	}
 }
