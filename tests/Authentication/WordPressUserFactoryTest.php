@@ -29,6 +29,19 @@ class WordPressUserFactoryTest extends \calderawp\caldera\restApi\Tests\TestCase
 	/**
 	 * @covers \calderawp\caldera\restApi\Authentication\WordPressUserFactory::fromNamePass()
 	 */
+	public function testFromPublicKey()
+	{
+		$user = Mockery::mock('\WP_User');
+		Functions\when('get_users')->justReturn([$user]);
+		$factory = new WordPressUserFactory();
+
+		$this->assertEquals($user, $factory->fromPublicKey('strong'));
+	}
+
+
+	/**
+	 * @covers \calderawp\caldera\restApi\Authentication\WordPressUserFactory::fromNamePass()
+	 */
 	public function testFormNamePassInValid()
 	{
 		$this->expectException(\calderawp\caldera\restApi\Authentication\AuthenticationException::class);

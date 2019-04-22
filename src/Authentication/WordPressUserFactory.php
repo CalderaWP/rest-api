@@ -43,4 +43,31 @@ class WordPressUserFactory implements UserFactoryContract
 		}
 		return $user;
 	}
+
+	/**
+	 * Find User by public key
+	 * @param string $key
+	 *
+	 * @return \WP_User|bool
+	 */
+	public function fromPublicKey(string  $key)
+	{
+		$users = get_users(['meta_key' => '_calderaPublicKey', 'meta_value' => $key]);
+		if (! empty($users)) {
+			return $users[0];
+		}
+		return false;
+	}
+
+	/**
+	 * Set user public key
+	 *
+	 * @param int $userId
+	 * @param string $key
+	 */
+	public function setUserPublicKey(int$userId, string $key):void
+	{
+		delete_user_meta($userId, '_calderaPublicKey');
+		add_user_meta($userId, '_calderaPublicKey', $key);
+	}
 }

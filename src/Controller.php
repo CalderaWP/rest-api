@@ -68,7 +68,7 @@ abstract class Controller implements \calderawp\caldera\restApi\Contracts\RestCo
 		$this->dataSource->create([
 			'accountId' => 3,
 		]);
-		return $this->response($this->dataSource->findWhere( 'accountId', $request->getParam('accountId') ) );
+		return $this->response($this->dataSource->findWhere('accountId', $request->getParam('accountId')));
 	}
 
 	public function anonymize(Request $request): Response
